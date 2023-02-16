@@ -1,7 +1,7 @@
 import java.util.ArrayList;
 public class MasterData{
-    ArrayList<Employee> employee = new ArrayList<Employee>();
+    private ArrayList<Employee> employeeslist = new ArrayList<Employee>();
     public MasterData(ArrayList<Employee> employee){
-        this.employee = employee;
+        this.employeeslist = employee;
     }
 }
