@@ -24,8 +24,6 @@ public class TestEmployee{
                 String empsalary = input.nextLine();
                 employee.setSalary(empsalary);
                 employees.add(employee);
-                // input.close();
-                // option.close();
             }
             else{
                 break;
