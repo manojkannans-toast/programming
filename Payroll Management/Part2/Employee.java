@@ -26,7 +26,7 @@ public class Employee{
         return this.empname;
     }
     public void setName(String empname){
-        String regex = "^[a-zA-Z]([.](?![.])|[a-zA-Z\\s]){3,20}$";
+        String regex = "^[a-zA-Z]([.]?|[a-zA-Z\\s]){3,20}$";
         if(empname.matches(regex)){
             this.empname = empname;
             return;

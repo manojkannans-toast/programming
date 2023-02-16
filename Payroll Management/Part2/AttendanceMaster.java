@@ -5,28 +5,13 @@ public class AttendanceMaster{
     public AttendanceMaster(){
         this.empattendance = new LinkedHashSet<EmployeeAttendance<Employee,Integer>>();
     }
-    public void setAttendance(Employee employee, String days){
-        Scanner input = new Scanner(System.in);
-        try{
-            int attendancedays = Integer.parseInt(days);
-            if(attendancedays > 0){
-                EmployeeAttendance<Employee,Integer> emp_attendance = new EmployeeAttendance<Employee,Integer>(employee,attendancedays);
-                this.empattendance.add(emp_attendance);
-            }
-            else{
-                System.out.println("WRONG ENTRY!! PLEASE ENTER THE VALID ATTENDANCE DAYS");
-                days = input.nextLine();
-                setAttendance(employee,days);
-                input.close();
-            }
-        }catch(Exception ex){
-            System.out.println("WRONG ENTRY!! PLEASE ENTER THE VALID ATTENDANCE DAYS ");
-            days = input.nextLine();
-            setAttendance(employee,days);
-            input.close();
-        }
+    public LinkedHashSet<EmployeeAttendance<Employee,Integer>> getEmployeeAttendance(){
+        return this.empattendance;
     }
     public void showEligibleList(){
+        if(this.empattendance.size() == 0){
+            System.out.println("NO ELIGIBLE EMPLOYEES WERE THERE");
+        }
         for(EmployeeAttendance<Employee,Integer> attendance : this.empattendance){
             Integer num_of_days = attendance.getValue();
             if(num_of_days > 10){

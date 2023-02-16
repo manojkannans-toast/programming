@@ -44,14 +44,30 @@ public class TestEmployee{
                 emp_details = masterdata.getEmployeeList().get(i).toString();
                 System.out.println(emp_details);
             }
-            System.out.println("SET ATTENDANCE FOR EACH EMPLOYEE"+"\n");
             AttendanceMaster attendancemaster = new AttendanceMaster();
-            Scanner input = new Scanner(System.in);
-            for(int i=0;i<masterdata.getEmployeeList().size();i++){
-                System.out.println("ENTER THE ATTENDANCE FOR AN EMPLOYEE ID "+masterdata.getEmployeeList().get(i).getEmpId());
-                String days = input.nextLine();
-                attendancemaster.setAttendance(masterdata.getEmployeeList().get(i),days);
-            }
+            System.out.println("SET ATTENDANCE FOR EACH EMPLOYEE"+"\n");
+            int i=0;
+            do{
+                do{
+                    try{
+                        System.out.println("ENTER THE ATTENDANCE FOR AN EMPLOYEE ID "+masterdata.getEmployeeList().get(i).getEmpId());
+                        Scanner input = new Scanner(System.in);
+                        String days = input.nextLine();
+                        int attendancedays = Integer.parseInt(days);
+                        if(attendancedays > 0){
+                            EmployeeAttendance<Employee,Integer> emp_attendance = new EmployeeAttendance<Employee,Integer>(employees.get(i),attendancedays);
+                            attendancemaster.getEmployeeAttendance().add(emp_attendance);
+                            break;
+                        }
+                        else{
+                            System.out.println("!!WRONG ENTRY!!");
+                        }
+                    }catch(Exception ex){
+                        System.out.println("!!WRONG ENTRY!!hihi");
+                    }
+                }while(true);
+                i++;
+            }while(i<masterdata.getEmployeeList().size());
             System.out.println("ELIGIBLE EMPLOYEES ARE :");
             attendancemaster.showEligibleList();
         }
