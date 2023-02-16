@@ -35,22 +35,22 @@ public class TestEmployee{
         else{
             MasterData masterdata = new MasterData(employees);
             System.out.println("\n"+"EMPLOYEE DETAILS :");
-            for(int i=0;i<masterdata.employeeslist.size();i++){
+            for(int i=0;i<masterdata.getEmployeeList().size();i++){
                 System.out.println("\n");
-                String emp_details = masterdata.employeeslist.get(i).toString();
+                String emp_details = masterdata.getEmployeeList().get(i).toString();
                 System.out.println(emp_details);
                 employees.get(i).setAllowance();
                 System.out.println("\n"+"\n"+"AFTER ALLOWANCE :");
-                emp_details = masterdata.employeeslist.get(i).toString();
+                emp_details = masterdata.getEmployeeList().get(i).toString();
                 System.out.println(emp_details);
             }
             System.out.println("SET ATTENDANCE FOR EACH EMPLOYEE"+"\n");
             AttendanceMaster attendancemaster = new AttendanceMaster();
             Scanner input = new Scanner(System.in);
-            for(int i=0;i<masterdata.employeeslist.size();i++){
-                System.out.println("ENTER THE ATTENDANCE FOR AN EMPLOYEE ID "+masterdata.employeeslist.get(i).getEmpId());
+            for(int i=0;i<masterdata.getEmployeeList().size();i++){
+                System.out.println("ENTER THE ATTENDANCE FOR AN EMPLOYEE ID "+masterdata.getEmployeeList().get(i).getEmpId());
                 String days = input.nextLine();
-                attendancemaster.setAttendance(masterdata.employeeslist.get(i),days);
+                attendancemaster.setAttendance(masterdata.getEmployeeList().get(i),days);
             }
             System.out.println("ELIGIBLE EMPLOYEES ARE :");
             attendancemaster.showEligibleList();
