@@ -4,4 +4,7 @@ public class MasterData{
     public MasterData(ArrayList<Employee> employee){
         this.employeeslist = employee;
     }
+    public ArrayList<Employee> getEmployeeList(){
+        return this.employeeslist;
+    }
 }
