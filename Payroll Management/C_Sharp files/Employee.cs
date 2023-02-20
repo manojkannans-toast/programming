@@ -1,16 +1,15 @@
-﻿// See https://aka.ms/new-console-template for more information
 using System;
 using System.Text.RegularExpressions;
 namespace EMP{
 public class Employee{
     private static int empcounter = 1001;
     private int empid;
-    public int EmpID{
+    public int EmpId{
         get{
             return empid;
         }
         set{
-            empid = value;
+            this.empid = value;
         }
     }
     private string empname;
@@ -52,13 +51,6 @@ public class Employee{
     public Employee(){
         empid = empcounter++;
     }
-    // public Employee(string empname,string empdepartment,string empdesignation,double empsalary){
-    //     this.empname = empname;
-    //     this.empdepartment = empdepartment;
-    //     this.empdesignation = empdesignation;
-    //     this.empsalary = empsalary;
-    //     this.empid = empcounter++;
-    // }
     public void ValidateName(string name){
         string regex_name = "^([a-zA-Z][.]{0,1}){1,}([a-zA-Z\\s]){3,20}$";
         Regex regex = new Regex(regex_name);
@@ -164,6 +156,10 @@ public class Employee{
         else{
             this.empsalary = Salary;
         }
+    }
+    public override string ToString(){
+        String details = "\n"+"EMPLOYEE ID: "+this.empid+"\n"+"EMPLOYEE NAME :"+this.empname+"\n"+"EMPLOYEE DEPARTMENT: "+this.empdepartment+"\n"+"EMPLOYEE DESIGNATION :"+this.empdesignation+"\n"+"EMPLOYEE SALARY :"+this.empsalary;
+        return details;
     }
 }
 }
