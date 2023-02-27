@@ -7,7 +7,7 @@ public class Employee{
     private String empdesignation;
     private double empsalary;
     public Employee(){
-        this.empid = empcounter++;
+        this.empid = empcounter;
     }
     public Employee(String empname,String empdepartment,String empdesignation,double empsalary){
         this.empname = empname;
