@@ -7,7 +7,7 @@ public class Employee{
     private String empdesignation;
     private double empsalary;
     public Employee(){
-        this.empid = empcounter;
+        this.empid = empcounter++;
     }
     public Employee(String empname,String empdepartment,String empdesignation,double empsalary){
         this.empname = empname;
@@ -151,6 +151,7 @@ public class Employee{
             setSalary(salary);
         }
     }
+
     public void setAllowance(){
         double allow = 0.0;
         String designation = this.empdesignation;
@@ -163,6 +164,23 @@ public class Employee{
         }
         this.empsalary += allow;
     }
+    // public void getattribute(String para){
+    //     if(para == "empid"){
+    //         getEmpId();
+    //     }
+    //     else if(para == "empname"){
+    //         getName();
+    //     }
+    //     else if(para == "empdepartment"){
+    //         getDepartment();
+    //     }
+    //     else if(param == "empdesignation"){
+    //         getDesignation();
+    //     }
+    //     else if(param == "empsalary"){
+    //         getSalary();
+    //     }
+    // }
     public String toString(){
         String details = "\n"+"EMPLOYEE ID: "+this.empid+"\n"+"EMPLOYEE NAME :"+this.empname+"\n"+"EMPLOYEE DEPARTMENT: "+this.empdepartment+"\n"+"EMPLOYEE DESIGNATION :"+this.empdesignation+"\n"+"EMPLOYEE SALARY :"+this.empsalary;
         return details;
