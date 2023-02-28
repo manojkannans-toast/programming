@@ -22,10 +22,10 @@ public class Employee{
     public void setEmpId(int empid){
         this.empid = empid;
     }
-    public String getName(){
+    public String getEmpName(){
         return this.empname;
     }
-    public void setName(String empname){
+    public void setEmpName(String empname){
         String regex = "^([a-zA-Z][.]{0,1}){1,}([a-zA-Z\\s]){3,20}$";
         if(empname.matches(regex)){
             this.empname = empname;
@@ -36,13 +36,13 @@ public class Employee{
             System.out.println("ENTER THE NAME :");
             Scanner input = new Scanner(System.in);
             empname = input.nextLine();
-            setName(empname);
+            setEmpName(empname);
         }
     }
-    public String getDepartment(){
+    public String getEmpDepartment(){
         return this.empdepartment;
     }
-    public void setDepartment(String department){
+    public void setEmpDepartment(String department){
         String emp_department = "";
         Scanner input = new Scanner(System.in);
         try{
@@ -75,19 +75,19 @@ public class Employee{
                 default:
                     System.out.println("!! WRONG ENTRY !!"+"\n"+"\n"+"ENTER THE DEPARTMENT :"+"\n"+"1. HUMAN RESOURCE"+"\n"+"2.IT"+"\n"+"3.FINANCE"+"\n"+"4.MARKETING"+"\n"+"5.R&D"+"\n"+"6.PRODUCTION");
                     emp_department = input.nextLine();
-                    setDepartment(emp_department);
+                    setEmpDepartment(emp_department);
                     break;
             }
         }catch(Exception ex){
             System.out.println("!! WRONG ENTRY !!"+"\n"+"\n"+"ENTER THE DEPARTMENT :"+"\n"+"1. HUMAN RESOURCE"+"\n"+"2.IT"+"\n"+"3.FINANCE"+"\n"+"4.MARKETING"+"\n"+"5.R&D"+"\n"+"6.PRODUCTION");
             emp_department = input.nextLine();
-            setDepartment(emp_department);
+            setEmpDepartment(emp_department);
         }
     }
-    public String getDesignation(){
+    public String getEmpDesignation(){
         return this.empdesignation;
     }
-    public void setDesignation(String designation){
+    public void setEmpDesignation(String designation){
         String emp_designation = "";
         Scanner input = new Scanner(System.in);
         try{
@@ -120,19 +120,19 @@ public class Employee{
                 default:
                     System.out.println("!! WRONG ENTRY !!"+"\n"+"\n"+"ENTER THE DESIGNATION"+"\n"+"1. TRAINEE ENGINEER"+"\n"+"2. SOFTWARE ENGINEER"+"\n"+"3. PROJECT LEAD"+"\n"+"4. PROJECT MANAGER"+"\n"+"5. PROGRAM MANAGER"+"\n"+"6. HR MANAGER");
                     emp_designation = input.nextLine();
-                    setDepartment(emp_designation);
+                    setEmpDepartment(emp_designation);
                     break;
             }
         }catch(Exception ex){
             System.out.println("!! WRONG ENTRY !!"+"\n"+"\n"+"ENTER THE DESIGNATION"+"\n"+"1. TRAINEE ENGINEER"+"\n"+"2. SOFTWARE ENGINEER"+"\n"+"3. PROJECT LEAD"+"\n"+"4. PROJECT MANAGER"+"\n"+"5. PROGRAM MANAGER"+"\n"+"6. HR MANAGER");
             emp_designation = input.nextLine();
-            setDepartment(emp_designation);
+            setEmpDepartment(emp_designation);
         }
     }
-    public double getSalary(){
+    public double getEmpSalary(){
         return this.empsalary;
     }
-    public void setSalary(String Salary){
+    public void setEmpSalary(String Salary){
         String salary = "";
         Scanner input = new Scanner(System.in);
         try{
@@ -140,7 +140,7 @@ public class Employee{
             if(emp_salary < 5000 || emp_salary > 1000000){
                 System.out.println("!!WRONG ENTRY!! PLEASE ENTER THE VALID SALARY");
                 salary = input.nextLine();
-                setSalary(salary);
+                setEmpSalary(salary);
             }
             else{
                 this.empsalary = emp_salary;
@@ -148,7 +148,7 @@ public class Employee{
         }catch(Exception ex){
             System.out.println("!!WRONG ENTRY!! PLEASE ENTER THE VALID SALARY");
             salary = input.nextLine();
-            setSalary(salary);
+            setEmpSalary(salary);
         }
     }
 
@@ -164,23 +164,20 @@ public class Employee{
         }
         this.empsalary += allow;
     }
-    // public void getattribute(String para){
-    //     if(para == "empid"){
-    //         getEmpId();
-    //     }
-    //     else if(para == "empname"){
-    //         getName();
-    //     }
-    //     else if(para == "empdepartment"){
-    //         getDepartment();
-    //     }
-    //     else if(param == "empdesignation"){
-    //         getDesignation();
-    //     }
-    //     else if(param == "empsalary"){
-    //         getSalary();
-    //     }
-    // }
+    public String getAttribute(String param){
+        if(param == "empname"){
+            return getEmpName();
+        }
+        else if(param == "empdepartment"){
+            return getEmpDepartment();
+        }
+        else if(param == "empdesignation"){
+            return getEmpDesignation();
+        }
+        else{
+            return "salary";
+        }
+    }
     public String toString(){
         String details = "\n"+"EMPLOYEE ID: "+this.empid+"\n"+"EMPLOYEE NAME :"+this.empname+"\n"+"EMPLOYEE DEPARTMENT: "+this.empdepartment+"\n"+"EMPLOYEE DESIGNATION :"+this.empdesignation+"\n"+"EMPLOYEE SALARY :"+this.empsalary;
         return details;

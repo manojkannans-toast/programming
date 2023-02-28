@@ -18,14 +18,16 @@ public class AttendanceMaster{
         }
         return 0;
     }
-    public void filterEmployeeList(LinkedHashMap<Employee,Integer> emp_attendance){
-        for(Map.Entry<Employee,Integer> attendance:emp_attendance.entrySet()){
+    public void filterEmployeeList(LinkedHashMap<Employee,Integer> temp_emp_attendance){
+        for(Map.Entry<Employee,Integer> attendance:temp_emp_attendance.entrySet()){
             Integer num_of_days = attendance.getValue();
             if(num_of_days <= 10){
-                emp_attendance.remove(attendance.getKey());
+                this.empattendance.remove(attendance.getKey());
             }
         }
-        return emp_attendance;
+    }
+    public void setEmployeeAttendance(LinkedHashMap<Employee,Integer> emp_attendance){
+        this.empattendance = emp_attendance;
     }
     public void showEligibleList(){
         if(this.empattendance.size() == 0){

@@ -1,61 +1,59 @@
 import java.util.Scanner;
 import java.util.ArrayList;
+import java.util.LinkedHashMap;
 public class TestEmployee{
-    // public static void quicksort(ArrayList<Employee> employees,int start,int end,String param){
-    //     if(start<end){
-    //         int part = partition(employees,start,end,param);
-    //         quicksort(employees,start,part-1,param);
-    //         quicksort(employees,part+1,end,param);
-    //     }
-    // }
-    
-    // public static int partition(ArrayList<Employee> employees,int start,int end,String param){
-    //     String pivot = employees.get(end).getattribute(param);
-    //     int pindex = start;
-    //     for(int i=start;i<end;i++){
-    //         if(pivot.compareTo(employees.get(i).getattribute(param)) > 0){
-    //             Employee temp = new Employee(employees.get(i).getEmpId(),employees.get(i).getEmpName(),employees.get(i).getEmpdepartment(),employees.get(i).getEmpDesignation(),employees.get(i).getEmpSalary());
-    //             employees.get(i) = employees.get(pindex);
-    //             employees.get(pindex) = temp;
-    //             // temp.empid = employees.get(i).empid;
-    //             // temp.empname = employees.get(i).empname;
-    //             // temp.empdepartment = employees.get(i).empdepartment;
-    //             // temp.empdesignation = employees.get(i).empdesignation;
-    //             // temp.empsalary = employees.get(i).empsalary;
-    //             // employees.get(i).empid = employees.get(pindex).empid;
-    //             // employees.get(i).empname = employees.get(pindex).empname;
-    //             // employees.get(i).empdepartment = employees.get(pindex).empdepartment;
-    //             // employees.get(i).empdesignation = employees.get(pindex).empdesignation;
-    //             // employees.get(i).empsalary = employees.get(pindex).empsalary;
-    //             // employees.get(pindex).empid = temp.empid;
-    //             // employees.get(pindex).empname = temp.empname;
-    //             // employees.get(pindex).empdepartment = temp.empdepartment;
-    //             // employees.get(pindex).empdesignation = temp.empdesignation;
-    //             // employees.get(pindex).empsalary = temp.empsalary;
-    //             pindex++;
-    //         }
-    //     }
-    //     Employee temp = new Employee(employees.get(end).getEmpId(),employees.get(end).getEmpName(),employees.get(end).empdepartment,employees.get(end).empdesignation,employees.get(end).empsalary);
-    //     employees.get(end) = employees.get(pindex);
-    //     employees.get(pindex) = temp;
-    //     // temp.empid = employees.get(end).empid;
-    //     // temp.empname = employees.get(end).empname;
-    //     // temp.empdepartment = employees.get(end).empdepartment;
-    //     // temp.empdesignation = employees.get(end).empdesignation;
-    //     // temp.empsalary = employees.get(end).empsalary;
-    //     // employees.get(end).empid = employees.get(pindex).empid;
-    //     // employees.get(end).empname = employees.get(pindex).empname;
-    //     // employees.get(end).empdepartment = employees.get(pindex).empdepartment;
-    //     // employees.get(end).empdesignation = employees.get(pindex).empdesignation;
-    //     // employees.get(end).empsalary = employees.get(pindex).empsalary;
-    //     // employees.get(pindex).empid = employees.get(pindex).empid;
-    //     // employees.get(pindex).empsalary = employees.get(pindex).empname;
-    //     // employees.get(pindex).empdesignation = employees.get(pindex).empdesignation;
-    //     // employees.get(pindex).empdepartment = employees.get(p)
-    //     // employees.get(pindex).id = temp.id;
-    //     return pindex;
-    // }
-
+    public static void quicksort(ArrayList<Employee> employees,int start,int end,String param){
+        if(start<end){
+            int part = partition(employees,start,end,param);
+            quicksort(employees,start,part-1,param);
+            quicksort(employees,part+1,end,param);
+        }
+    }
+    public static int partition(ArrayList<Employee> employees,int start,int end,String param){
+        String pivot = "";
+        double pivot_salary = 0.0;
+        if(param == "salary"){
+            pivot_salary = employees.get(end).getEmpSalary();
+        }
+        else{
+            pivot = employees.get(end).getAttribute(param);
+        }
+        int pindex = start;
+        for(int i=start;i<end;i++){
+            System.out.println(pivot);
+            if(param !="salary"){
+                if(pivot.compareTo(employees.get(i).getAttribute(param)) > 0){
+                    Employee temp = new Employee();
+                    temp = employees.get(pindex);
+                    employees.set(pindex,employees.get(i));
+                    employees.set(i,temp);;
+                    pindex++;
+                }
+            }
+            else{
+                if(pivot_salary > employees.get(i).getEmpSalary()){
+                    Employee temp = new Employee();
+                    temp = employees.get(pindex);
+                    employees.set(pindex,employees.get(i));
+                    employees.set(i,temp);
+                    pindex++;
+                }
+            }
+        }
+        Employee temp = new Employee();
+        temp = employees.get(pindex);
+        employees.set(pindex,employees.get(end));
+        employees.set(end,temp);
+        return pindex;
+    }
+    public static void display(MasterData masterdata){
+        for(int i=0;i<masterdata.getEmployeeList().size();i++){
+            System.out.println("\n");
+                masterdata.getEmployeeList().get(i).setAllowance();
+                String emp_details = masterdata.getEmployeeList().get(i).toString();
+                System.out.println(emp_details);
+        }
+    }
     public static void setAttendanceForEmployees(MasterData masterdata,AttendanceMaster attendancemaster){
         System.out.println("SET ATTENDANCE FOR ADDED EMPLOYEES"+"\n");
         int i=0;
@@ -129,7 +127,7 @@ public class TestEmployee{
             Scanner option = new Scanner(System.in);
             String choice = option.next();
             if(choice.equals("yes")){
-                System.out.println("ENTER THE CHOICE :"+"\n"+"1. ADD EMPLOYEE DETAILS"+"\n"+"2. SET EMPLOYEES ATTENDANCE"+"\n"+"3. UPDATE EMPLOYEE ATTENDANCE");
+                System.out.println("ENTER THE CHOICE :"+"\n"+"1. ADD EMPLOYEE DETAILS"+"\n"+"2. SET EMPLOYEES ATTENDANCE"+"\n"+"3. UPDATE EMPLOYEE ATTENDANCE"+"\n"+"4. FILTER EMPLOYEES"+"\n"+"5. SORT EMPLOYEE DETAIL"+"\n"+"6. DISPLAY EMPLOYEE DETAILS");
                 Scanner input = new Scanner(System.in);
                 int employeechoice = input.nextInt();
                 if(employeechoice == 1){
@@ -137,16 +135,16 @@ public class TestEmployee{
                     System.out.print("ENTER THE EMPLOYEE DETAILS"+"\n"+"ENTER THE NAME :");
                     input.nextLine();
                     String empname = input.nextLine();
-                    employee.setName(empname);
+                    employee.setEmpName(empname);
                     System.out.println("ENTER THE EMPLOYEE DEPARTMENT :"+"\n"+"1. HUMAN RESOURCE"+"\n"+"2. IT"+"\n"+"3. FINANCE"+"\n"+"4. MARKETING"+"\n"+"5. R&D"+"\n"+"6. PRODUCTION");
                     String empdepartment = input.nextLine();
-                    employee.setDepartment(empdepartment);
+                    employee.setEmpDepartment(empdepartment);
                     System.out.println("ENTER THE EMPLOYEE DESIGNATION"+"\n"+"1. TRAINEE ENGINEER"+"\n"+"2. SOFTWARE ENGINEER"+"\n"+"3. PROJECT LEAD"+"\n"+"4. PROJECT MANAGER"+"\n"+"5. PROGRAM MANAGER"+"\n"+"6. HR MANAGER");
                     String empdesignation = input.nextLine();
-                    employee.setDesignation(empdesignation);
+                    employee.setEmpDesignation(empdesignation);
                     System.out.println("ENTER THE EMPLOYEE SALARY :");
                     String empsalary = input.nextLine();
-                    employee.setSalary(empsalary);
+                    employee.setEmpSalary(empsalary);
                     employees.add(employee);
                 }
                 else if(employeechoice == 2){
@@ -161,6 +159,7 @@ public class TestEmployee{
                 else if(employeechoice == 3){
                     masterdata.setEmployeeList(employees);
                     System.out.println("ENTER THE EMPLOYEE ID :");
+                    input.nextLine();
                     String empid = input.nextLine();
                     int emp_id = validateEmployeeId(empid);
                     System.out.println("ENTER THE EMPLOYEE ATTENDANCE :");
@@ -174,8 +173,61 @@ public class TestEmployee{
                         System.out.println("!!NO SUCH EMPLOYEE FOUND!!");
                     }
                 }
-                else{
-                    break;
+                else if(employeechoice == 4){
+                    masterdata.setEmployeeList(employees);
+                    LinkedHashMap<Employee,Integer> temp_emp_attendance = attendancemaster.getEmployeeAttendance();
+                    attendancemaster.filterEmployeeList(temp_emp_attendance);
+                    attendancemaster.showEligibleList();
+                }
+                else if(employeechoice == 5){
+                    do{
+                        System.out.println("1. SORT BY EMPLOYEE NAME"+"\n"+"2. SORT BY EMPLOYEE DEPARTMENT"+"\n"+"3. SORT BY EMPLOYEE DESIGNATION"+"\n"+"4. SORT BY EMPLOYEE SALARY"+"\n"+"5. TO EXIT");
+                        int sort_choice = input.nextInt();
+                        int flag = 0;
+                        switch(sort_choice){
+                            case 1:
+                                quicksort(masterdata.getEmployeeList(),0,masterdata.getEmployeeList().size()-1,"empname");
+                                display(masterdata);
+                                flag = 1;
+                                break;
+                            case 2:
+                                quicksort(masterdata.getEmployeeList(),0,masterdata.getEmployeeList().size()-1,"empdepartment");
+                                display(masterdata);
+                                flag = 1;
+                                break;
+                            case 3:
+                                quicksort(masterdata.getEmployeeList(),0,masterdata.getEmployeeList().size()-1,"empdesignation");
+                                display(masterdata);
+                                flag = 1;
+                                break;
+                            case 4:
+                                quicksort(masterdata.getEmployeeList(),0,masterdata.getEmployeeList().size()-1,"salary");
+                                display(masterdata);
+                                flag = 1;
+                                break;
+                            case 5:
+                                flag = 1;
+                                break;
+                            default:
+                                System.out.println("!!YOU HAVE ENTERED WRONG OPTION!!");
+                                break;
+                        }
+                        if(flag == 1){
+                            break;
+                        }
+                    }while(true);
+                }
+                else if(employeechoice == 6){
+                    System.out.println("\n"+"EMPLOYEE DETAILS :");
+                    for(int i=0;i<masterdata.getEmployeeList().size();i++){
+                        System.out.println("\n");
+                        // String emp_details = masterdata.getEmployeeList().get(i).toString();
+                        // System.out.println(emp_details);
+                        //System.out.println("\n"+"\n"+"AFTER ALLOWANCE :");
+                        employees.get(i).setAllowance();
+                        String emp_details = masterdata.getEmployeeList().get(i).toString();
+                        System.out.println(emp_details);
+                    }
                 }
             }
             else{
@@ -186,16 +238,6 @@ public class TestEmployee{
             System.out.println("!!No employee were added!!");
         }
         else{
-            System.out.println("\n"+"EMPLOYEE DETAILS :");
-            for(int i=0;i<masterdata.getEmployeeList().size();i++){
-                System.out.println("\n");
-                String emp_details = masterdata.getEmployeeList().get(i).toString();
-                System.out.println(emp_details);
-                employees.get(i).setAllowance();
-                System.out.println("\n"+"\n"+"AFTER ALLOWANCE :");
-                emp_details = masterdata.getEmployeeList().get(i).toString();
-                System.out.println(emp_details);
-            }
             System.out.println("ELIGIBLE EMPLOYEES ARE :");
             attendancemaster.showEligibleList();
         }
