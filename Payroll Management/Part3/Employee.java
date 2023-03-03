@@ -26,7 +26,7 @@ public class Employee{
         return this.empname;
     }
     public void setEmpName(String empname){
-        String regex = "^([a-zA-Z][.]{0,1}){1,}([a-zA-Z\\s]){3,20}$";
+        String regex = "^([A-Z]{1,})([a-zA-Z\\s]){3,20}$";
         if(empname.matches(regex)){
             this.empname = empname;
             return;
@@ -76,12 +76,14 @@ public class Employee{
                     System.out.println("!! WRONG ENTRY !!"+"\n"+"\n"+"ENTER THE DEPARTMENT :"+"\n"+"1. HUMAN RESOURCE"+"\n"+"2.IT"+"\n"+"3.FINANCE"+"\n"+"4.MARKETING"+"\n"+"5.R&D"+"\n"+"6.PRODUCTION");
                     emp_department = input.nextLine();
                     setEmpDepartment(emp_department);
+                    input.close();
                     break;
             }
         }catch(Exception ex){
             System.out.println("!! WRONG ENTRY !!"+"\n"+"\n"+"ENTER THE DEPARTMENT :"+"\n"+"1. HUMAN RESOURCE"+"\n"+"2.IT"+"\n"+"3.FINANCE"+"\n"+"4.MARKETING"+"\n"+"5.R&D"+"\n"+"6.PRODUCTION");
             emp_department = input.nextLine();
             setEmpDepartment(emp_department);
+            input.close();
         }
     }
     public String getEmpDesignation(){
@@ -151,7 +153,6 @@ public class Employee{
             setEmpSalary(salary);
         }
     }
-
     public void setAllowance(){
         double allow = 0.0;
         String designation = this.empdesignation;
@@ -163,20 +164,6 @@ public class Employee{
             allow = (10 * this.empsalary)/100;
         }
         this.empsalary += allow;
-    }
-    public String getAttribute(String param){
-        if(param == "empname"){
-            return getEmpName();
-        }
-        else if(param == "empdepartment"){
-            return getEmpDepartment();
-        }
-        else if(param == "empdesignation"){
-            return getEmpDesignation();
-        }
-        else{
-            return "salary";
-        }
     }
     public String toString(){
         String details = "\n"+"EMPLOYEE ID: "+this.empid+"\n"+"EMPLOYEE NAME :"+this.empname+"\n"+"EMPLOYEE DEPARTMENT: "+this.empdepartment+"\n"+"EMPLOYEE DESIGNATION :"+this.empdesignation+"\n"+"EMPLOYEE SALARY :"+this.empsalary;
