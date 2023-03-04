@@ -76,14 +76,12 @@ public class Employee{
                     System.out.println("!!ENTER THE CORRECT OPTION!!"+"\n"+"\n"+"ENTER THE DEPARTMENT :"+"\n"+"1. HUMAN RESOURCE"+"\n"+"2.IT"+"\n"+"3.FINANCE"+"\n"+"4.MARKETING"+"\n"+"5.R&D"+"\n"+"6.PRODUCTION");
                     emp_department = input.nextLine();
                     setEmpDepartment(emp_department);
-                    input.close();
                     break;
             }
         }catch(Exception ex){
-            System.out.println("!!ALHABETS ARE NOT ALLOWED!!"+"\n"+"\n"+"ENTER THE DEPARTMENT :"+"\n"+"1. HUMAN RESOURCE"+"\n"+"2.IT"+"\n"+"3.FINANCE"+"\n"+"4.MARKETING"+"\n"+"5.R&D"+"\n"+"6.PRODUCTION");
+            System.out.println("!!SPECIAL CHARACTERS AND ALHABETS ARE NOT ALLOWED!!"+"\n"+"\n"+"ENTER THE DEPARTMENT :"+"\n"+"1. HUMAN RESOURCE"+"\n"+"2.IT"+"\n"+"3.FINANCE"+"\n"+"4.MARKETING"+"\n"+"5.R&D"+"\n"+"6.PRODUCTION");
             emp_department = input.nextLine();
             setEmpDepartment(emp_department);
-            input.close();
         }
     }
     public String getEmpDesignation(){
@@ -122,13 +120,13 @@ public class Employee{
                 default:
                     System.out.println("!! ENTER THE CORRECT OPTION !!"+"\n"+"\n"+"ENTER THE DESIGNATION"+"\n"+"1. TRAINEE ENGINEER"+"\n"+"2. SOFTWARE ENGINEER"+"\n"+"3. PROJECT LEAD"+"\n"+"4. PROJECT MANAGER"+"\n"+"5. PROGRAM MANAGER"+"\n"+"6. HR MANAGER");
                     emp_designation = input.nextLine();
-                    setEmpDepartment(emp_designation);
+                    setEmpDesignation(emp_designation);
                     break;
             }
         }catch(Exception ex){
-            System.out.println("!! ALHABETS ARE NOT ALLOWED !!"+"\n"+"\n"+"ENTER THE DESIGNATION"+"\n"+"1. TRAINEE ENGINEER"+"\n"+"2. SOFTWARE ENGINEER"+"\n"+"3. PROJECT LEAD"+"\n"+"4. PROJECT MANAGER"+"\n"+"5. PROGRAM MANAGER"+"\n"+"6. HR MANAGER");
+            System.out.println("!!SPECIAL CHARACTERS AND ALHABETS ARE NOT ALLOWED !!"+"\n"+"\n"+"ENTER THE DESIGNATION"+"\n"+"1. TRAINEE ENGINEER"+"\n"+"2. SOFTWARE ENGINEER"+"\n"+"3. PROJECT LEAD"+"\n"+"4. PROJECT MANAGER"+"\n"+"5. PROGRAM MANAGER"+"\n"+"6. HR MANAGER");
             emp_designation = input.nextLine();
-            setEmpDepartment(emp_designation);
+            setEmpDesignation(emp_designation);
         }
     }
     public double getEmpSalary(){
@@ -148,7 +146,7 @@ public class Employee{
                 this.empsalary = emp_salary;
             }
         }catch(Exception ex){
-            System.out.println("!!ALHABETS ARE NOT ALLOWED!! PLEASE ENTER THE VALID SALARY");
+            System.out.println("!!SPECIAL CHARACTERS AND ALHABETS ARE NOT ALLOWED!! PLEASE ENTER THE VALID SALARY");
             salary = input.nextLine();
             setEmpSalary(salary);
         }

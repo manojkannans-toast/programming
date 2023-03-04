@@ -1,5 +1,6 @@
 import java.util.LinkedHashMap;
 import java.util.Map;
+import java.util.ArrayList;
 import java.util.Scanner;
 public class AttendanceMaster{
     private LinkedHashMap<Employee,Integer> empattendance;
@@ -9,10 +10,10 @@ public class AttendanceMaster{
     public LinkedHashMap<Employee,Integer> getEmployeeAttendance(){
         return this.empattendance;
     }
-    public int updateAttendance(int employeeid,int employeeattendance){
-        for(Map.Entry<Employee,Integer> attendance:this.empattendance.entrySet()){
-            if(attendance.getKey().getEmpId() == employeeid){
-                this.empattendance.replace(attendance.getKey(),employeeattendance);
+    public int updateAttendance(int employeeid,int employeeattendance,MasterData masterdata){
+        for(Employee emp: masterdata.getEmployeeList()){
+            if(emp.getEmpId() == employeeid){
+                this.empattendance.put(emp,employeeattendance);
                 return 1;
             }
         }
@@ -31,7 +32,7 @@ public class AttendanceMaster{
     }
     public void showEligibleList(){
         if(this.empattendance.size() == 0){
-            System.out.println("NO ELIGIBLE EMPLOYEES WERE THERE");
+            System.out.println("!!ATTENDANCE ARE NOT ADDED TO THE EMPLOYEES!!");
         }
         else{
             System.out.format("%15s %18s %19s %23s %18s","ID","NAME","DEPARTMENT","DESIGNATION","SALARY"+"\n");

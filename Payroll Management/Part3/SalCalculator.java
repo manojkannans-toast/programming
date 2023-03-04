@@ -3,7 +3,7 @@ import java.util.LinkedHashMap;
 public class SalCalculator{
     public void calculateSalary(LinkedHashMap<Employee,Integer> eligiblelist){
         if(eligiblelist.size() == 0){
-            System.out.println("!!NO ELIGIBLE EMPLOYEES WERE ADDED!!");
+            System.out.println("!!ATTENDANCE ARE NOT ADDED FOR THE EMPLOYEES!!");
             return;
         }
         System.out.format("%15s %13s %17s %22s %18s %14s %13S %13S","ID","NAME","DEPARTMENT","DESIGNATION","SALARY","GROSS","PF","NET"+"\n");
@@ -20,7 +20,7 @@ public class SalCalculator{
             double gross = emp.getKey().getEmpSalary() + allowance;
             double pf = (10 * gross)/100;
             double net_salary = gross - pf;
-            System.out.format("%15s %13s %15s %27s %20s %15s %13s %13s",emp.getKey().getEmpId(),emp.getKey().getEmpName(),emp.getKey().getEmpDepartment(),emp.getKey().getEmpDesignation(),emp.getKey().getEmpSalary(),gross,pf,net_salary+"\n");
+            System.out.format("%15s %13s %17s %22s %18s %14s %13S %13S",emp.getKey().getEmpId(),emp.getKey().getEmpName(),emp.getKey().getEmpDepartment(),emp.getKey().getEmpDesignation(),emp.getKey().getEmpSalary(),gross,pf,net_salary+"\n");
         }
     }       
 }

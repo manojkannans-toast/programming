@@ -77,7 +77,7 @@ public class TestEmployee{
         }
     }
     public static void display(MasterData masterdata){
-        System.out.format("%15s %18s %19s %23s %18s","ID","NAME","DEPARTMENT","DESIGNATION","SALARY"+"\n");
+        System.out.format("%15s %18s %19s %23s %18s","ID","NAME","DEPARTMENT","DESIGNATION","SALARY"+"\n"+"----------------------------------------------------------------------");
         for(Employee emp : masterdata.getEmployeeList()){
                 String details = emp.toString();
                 String mod_det[] = details.split(",");
@@ -91,10 +91,10 @@ public class TestEmployee{
             do{
                 try{
                     if(i == masterdata.getEmployeeList().size()){
-                        System.out.println(i+"!!THERE WERE NO EMPLOYEES TO ADD THE ATTENDANCE!!");
+                        System.out.println("!!THERE ARE NO EMPLOYEES TO ADD THE ATTENDANCE!!");
                         break;
                     }
-                    if(attendancemaster.getEmployeeAttendance().containsKey(masterdata.getEmployeeList().get(i)) && attendancemaster.getEmployeeAttendance().get(masterdata.getEmployeeList().get(i)) == 0){
+                    if(!attendancemaster.getEmployeeAttendance().containsKey(masterdata.getEmployeeList().get(i))){
                         System.out.println("ENTER THE ATTENDANCE FOR AN EMPLOYEE ID "+masterdata.getEmployeeList().get(i).getEmpId());
                         Scanner input = new Scanner(System.in);
                         String days = input.nextLine();
@@ -179,175 +179,162 @@ public class TestEmployee{
         ArrayList<Employee> employees = new ArrayList<Employee>();
         AttendanceMaster attendancemaster = new AttendanceMaster();
         MasterData masterdata = new MasterData(employees);
-        System.out.println("------------------------------------");
-        int count = 0;
-        while(true){
-            String choice = "";
-            if(count > 0){
-                System.out.println("DO YOU WANT TO CONTINUE? yes or no");
-                Scanner option = new Scanner(System.in);
-                choice = option.next();
-            }
-            int employeechoice = -1;
-            if(choice.equals("yes") || count ==0){
-                System.out.println("\n"+"1. ADD EMPLOYEE DETAILS"+"\n"+"2. SET EMPLOYEES ATTENDANCE"+"\n"+"3. UPDATE EMPLOYEE ATTENDANCE"+"\n"+"4. FILTER EMPLOYEES"+"\n"+"5. SORT EMPLOYEE DETAIL"+"\n"+"6. SHOW ELIGIBLE EMPLOYEES"+"\n"+"7. CALCULATE SALARY FOR EMPLOYEES"+"\n"+"8. DISPLAY EMPLOYEE DETAILS"+"\n"+"9.TO EXIT"+"\n"+"ENTER THE CHOICE :");
-                Scanner input = new Scanner(System.in);
-                try{
-                    employeechoice = input.nextInt();
-                    switch(employeechoice){
-                        case 1:
-                            Employee employee = new Employee();
-                            System.out.print("ENTER THE EMPLOYEE DETAILS"+"\n"+"ENTER THE NAME :");
-                            input.nextLine();
-                            String empname = input.nextLine();
-                            employee.setEmpName(empname);
-                            System.out.println("ENTER THE EMPLOYEE DEPARTMENT :"+"\n"+"1. HUMAN RESOURCE"+"\n"+"2. IT"+"\n"+"3. FINANCE"+"\n"+"4. MARKETING"+"\n"+"5. R&D"+"\n"+"6. PRODUCTION");
-                            String empdepartment = input.nextLine();
-                            employee.setEmpDepartment(empdepartment);
-                            System.out.println("ENTER THE EMPLOYEE DESIGNATION"+"\n"+"1. TRAINEE ENGINEER"+"\n"+"2. SOFTWARE ENGINEER"+"\n"+"3. PROJECT LEAD"+"\n"+"4. PROJECT MANAGER"+"\n"+"5. PROGRAM MANAGER"+"\n"+"6. HR MANAGER");
-                            String empdesignation = input.nextLine();
-                            employee.setEmpDesignation(empdesignation);
-                            System.out.println("ENTER THE EMPLOYEE SALARY :");
-                            String empsalary = input.nextLine();
-                            employee.setEmpSalary(empsalary);
-                            employees.add(employee);
-                            attendancemaster.getEmployeeAttendance().put(employee,0);
-                            break;
-                        case 2:
-                            masterdata.setEmployeeList(employees);
-                            if(employees.size()==0){
-                                System.out.println("!!There is no Employee found!!");
+        String employeechoice;
+        int employee_choice = -1;
+        do{
+            employeechoice = "";
+            employee_choice = -1;
+            System.out.println("\n"+"-----------------------------------------------------"+"\n"+"1. ADD EMPLOYEE DETAILS"+"\n"+"2. SET EMPLOYEES ATTENDANCE"+"\n"+"3. UPDATE EMPLOYEE ATTENDANCE"+"\n"+"4. FILTER EMPLOYEES"+"\n"+"5. SORT EMPLOYEE DETAIL"+"\n"+"6. SHOW ELIGIBLE EMPLOYEES"+"\n"+"7. CALCULATE SALARY FOR EMPLOYEES"+"\n"+"8. DISPLAY EMPLOYEE DETAILS"+"\n"+"9.TO EXIT"+"\n"+"ENTER THE CHOICE :");
+            Scanner input = new Scanner(System.in);
+            try{
+                employeechoice = input.nextLine();
+                employee_choice = Integer.parseInt(employeechoice);
+                switch(employee_choice){
+                    case 1:
+                        Employee employee = new Employee();
+                        System.out.print("ENTER THE EMPLOYEE DETAILS"+"\n"+"ENTER THE NAME :");
+                        //input.nextLine();
+                        String empname = input.nextLine();
+                        employee.setEmpName(empname);
+                        System.out.println("ENTER THE EMPLOYEE DEPARTMENT :"+"\n"+"1. HUMAN RESOURCE"+"\n"+"2. IT"+"\n"+"3. FINANCE"+"\n"+"4. MARKETING"+"\n"+"5. R&D"+"\n"+"6. PRODUCTION");
+                        String empdepartment = input.nextLine();
+                        employee.setEmpDepartment(empdepartment);
+                        System.out.println("ENTER THE EMPLOYEE DESIGNATION"+"\n"+"1. TRAINEE ENGINEER"+"\n"+"2. SOFTWARE ENGINEER"+"\n"+"3. PROJECT LEAD"+"\n"+"4. PROJECT MANAGER"+"\n"+"5. PROGRAM MANAGER"+"\n"+"6. HR MANAGER");
+                        String empdesignation = input.nextLine();
+                        employee.setEmpDesignation(empdesignation);
+                        System.out.println("ENTER THE EMPLOYEE SALARY :");
+                        String empsalary = input.nextLine();
+                        employee.setEmpSalary(empsalary);
+                        employees.add(employee);
+                        break;
+                    case 2:
+                        masterdata.setEmployeeList(employees);
+                        if(employees.size()==0){
+                            System.out.println("!!THERE ARE NO EMPLOYEES FOUND!!");
+                        }
+                        else{
+                            setAttendanceForEmployees(masterdata,attendancemaster);
+                        }
+                        break;
+                    case 3:
+                        masterdata.setEmployeeList(employees);
+                        System.out.println("ENTER THE EMPLOYEE ID :");
+                        String empid = input.nextLine();
+                        int emp_id = validateEmployeeId(empid,attendancemaster);
+                        System.out.println("ENTER THE EMPLOYEE ATTENDANCE :");
+                        String empattendance = input.nextLine();
+                        int emp_attendance = validateEmployeeAttendance(empattendance);
+                        if(attendancemaster.getEmployeeAttendance().size()!=0){
+                            int result = attendancemaster.updateAttendance(emp_id,emp_attendance,masterdata);
+                            if(result == 1){
+                                System.out.println("ATTENDANCE UPDATED SUCCESFULLY");
                             }
                             else{
-                                setAttendanceForEmployees(masterdata,attendancemaster);
+                                System.out.println("!!NO SUCH EMPLOYEE FOUND!!");
                             }
-                            break;
-                        case 3:
-                            masterdata.setEmployeeList(employees);
-                            System.out.println("ENTER THE EMPLOYEE ID :");
+                        }else{
+                            System.out.println("!!NO EMPLOYEES WERE FOUND!!");
+                        }
+                        break;
+                    case 4:
+                        masterdata.setEmployeeList(employees);
+                        LinkedHashMap<Employee,Integer> temp_emp_attendance = attendancemaster.getEmployeeAttendance();
+                        attendancemaster.filterEmployeeList(temp_emp_attendance);
+                        attendancemaster.showEligibleList();
+                        break;
+                    case 5:
+                        do{
+                            System.out.println("1. SORT BY EMPLOYEE NAME"+"\n"+"2. SORT BY EMPLOYEE DEPARTMENT"+"\n"+"3. SORT BY EMPLOYEE DESIGNATION"+"\n"+"4. SORT BY EMPLOYEE SALARY"+"\n"+"5. TO EXIT");
+                            int sort_choice = input.nextInt();
                             input.nextLine();
-                            String empid = input.nextLine();
-                            int emp_id = validateEmployeeId(empid,attendancemaster);
-                            System.out.println("ENTER THE EMPLOYEE ATTENDANCE :");
-                            String empattendance = input.nextLine();
-                            int emp_attendance = validateEmployeeAttendance(empattendance);
-                            if(attendancemaster.getEmployeeAttendance().size()!=0){
-                                int result = attendancemaster.updateAttendance(emp_id,emp_attendance);
-                                if(result == 1){
-                                    System.out.println("ATTENDANCE UPDATED SUCCESFULLY");
-                                }
-                                else{
-                                    System.out.println("!!NO SUCH EMPLOYEE FOUND!!");
-                                }
-                            }else{
-                                System.out.println("!!NO EMPLOYEES WERE FOUND!!");
-                            }
-                            break;
-                        case 4:
-                            masterdata.setEmployeeList(employees);
-                            LinkedHashMap<Employee,Integer> temp_emp_attendance = attendancemaster.getEmployeeAttendance();
-                            attendancemaster.filterEmployeeList(temp_emp_attendance);
-                            attendancemaster.showEligibleList();
-                            //temp_emp_attendance.clear();
-                            break;
-                        case 5:
-                            do{
-                                System.out.println("1. SORT BY EMPLOYEE NAME"+"\n"+"2. SORT BY EMPLOYEE DEPARTMENT"+"\n"+"3. SORT BY EMPLOYEE DESIGNATION"+"\n"+"4. SORT BY EMPLOYEE SALARY"+"\n"+"5. TO EXIT");
-                                int sort_choice = input.nextInt();
-                                input.nextLine();
-                                int flag = 0,asc_desc;
-                                String asc_desc_choice;
-                                switch(sort_choice){
-                                    case 1:
-                                        System.out.println("1. SORT IN ASCENDING ORDER"+"\n"+"2. SORT IN DESCENDING ORDER");
-                                        asc_desc_choice = input.nextLine();
-                                        asc_desc = validateSortChoice(asc_desc_choice);
-                                        if(asc_desc == 1){
-                                            masterdata.getEmployeeList().sort(new SortByName(true));
-                                        }
-                                        else{
-                                            masterdata.getEmployeeList().sort(new SortByName(false));
-                                        }
-                                        display(masterdata);
-                                        flag = 1;
-                                        break;
-                                    case 2:
-                                        System.out.println("1. SORT IN ASCENDING ORDER"+"\n"+"2. SORT IN DESCENDING ORDER");
-                                        asc_desc_choice = input.nextLine();
-                                        asc_desc = validateSortChoice(asc_desc_choice);
-                                        if(asc_desc == 1){
-                                            masterdata.getEmployeeList().sort(new SortByDepartment(true));
-                                        }
-                                        else{
-                                            masterdata.getEmployeeList().sort(new SortByDepartment(false));
-                                        }
-                                        display(masterdata);
-                                        flag = 1;
-                                        break;
-                                    case 3:
-                                        System.out.println("1. SORT IN ASCENDING ORDER"+"\n"+"2. SORT IN DESCENDING ORDER");
-                                        asc_desc_choice = input.nextLine();
-                                        asc_desc = validateSortChoice(asc_desc_choice);
-                                        if(asc_desc == 1){
-                                            masterdata.getEmployeeList().sort(new SortByDesignation(true));
-                                        }
-                                        else{
-                                            masterdata.getEmployeeList().sort(new SortByDesignation(false));
-                                        }
-                                        display(masterdata);
-                                        flag = 1;
-                                        break;
-                                    case 4:
-                                        System.out.println("1. SORT IN ASCENDING ORDER"+"\n"+"2. SORT IN DESCENDING ORDER");
-                                        asc_desc_choice = input.nextLine();
-                                        asc_desc = validateSortChoice(asc_desc_choice);
-                                        if(asc_desc == 1){
-                                            masterdata.getEmployeeList().sort(new SortBySalary(true));
-                                        }
-                                        else{
-                                            masterdata.getEmployeeList().sort(new SortBySalary(false));
-                                        }
-                                        display(masterdata);
-                                        flag = 1;
-                                        break;
-                                    case 5:
-                                        flag = 1;
-                                        break;
-                                    default:
-                                        System.out.println("!!YOU HAVE ENTERED THE WRONG OPTION!!");
-                                        break;
-                                }
-                                if(flag == 1){
+                            int flag = 0,asc_desc;
+                            String asc_desc_choice;
+                            switch(sort_choice){
+                                case 1:
+                                    System.out.println("1. SORT IN ASCENDING ORDER"+"\n"+"2. SORT IN DESCENDING ORDER");
+                                    asc_desc_choice = input.nextLine();
+                                    asc_desc = validateSortChoice(asc_desc_choice);
+                                    if(asc_desc == 1){
+                                        masterdata.getEmployeeList().sort(new SortByName(true));
+                                    }
+                                    else{
+                                        masterdata.getEmployeeList().sort(new SortByName(false));
+                                    }
+                                    display(masterdata);
+                                    flag = 1;
                                     break;
-                                }
-                            }while(true);
-                            break;
-                        case 6:
-                            System.out.println("ELIGIBLE EMPLOYEES ARE :");
-                            attendancemaster.showEligibleList();
-                            break;
-                        case 7:
-                            SalCalculator sal_cal = new SalCalculator();
+                                case 2:
+                                    System.out.println("1. SORT IN ASCENDING ORDER"+"\n"+"2. SORT IN DESCENDING ORDER");
+                                    asc_desc_choice = input.nextLine();
+                                    asc_desc = validateSortChoice(asc_desc_choice);
+                                    if(asc_desc == 1){
+                                        masterdata.getEmployeeList().sort(new SortByDepartment(true));
+                                    }
+                                    else{
+                                        masterdata.getEmployeeList().sort(new SortByDepartment(false));
+                                    }
+                                    display(masterdata);
+                                    flag = 1;
+                                    break;
+                                case 3:
+                                    System.out.println("1. SORT IN ASCENDING ORDER"+"\n"+"2. SORT IN DESCENDING ORDER");
+                                    asc_desc_choice = input.nextLine();
+                                    asc_desc = validateSortChoice(asc_desc_choice);
+                                    if(asc_desc == 1){
+                                        masterdata.getEmployeeList().sort(new SortByDesignation(true));
+                                    }
+                                    else{
+                                        masterdata.getEmployeeList().sort(new SortByDesignation(false));
+                                    }
+                                    display(masterdata);
+                                    flag = 1;
+                                    break;
+                                case 4:
+                                    System.out.println("1. SORT IN ASCENDING ORDER"+"\n"+"2. SORT IN DESCENDING ORDER");
+                                    asc_desc_choice = input.nextLine();
+                                    asc_desc = validateSortChoice(asc_desc_choice);
+                                    if(asc_desc == 1){
+                                        masterdata.getEmployeeList().sort(new SortBySalary(true));
+                                    }
+                                    else{
+                                        masterdata.getEmployeeList().sort(new SortBySalary(false));
+                                    }
+                                    display(masterdata);
+                                    flag = 1;
+                                    break;
+                                case 5:
+                                    flag = 1;
+                                    break;
+                                default:
+                                    System.out.println("!!YOU HAVE ENTERED THE WRONG OPTION!!");
+                                    break;
+                            }
+                            if(flag == 1){
+                                break;
+                            }
+                        }while(true);
+                        break;
+                    case 6:
+                        System.out.println("ELIGIBLE EMPLOYEES ARE :");
+                        attendancemaster.showEligibleList();
+                        break;
+                    case 7:
+                        SalCalculator sal_cal = new SalCalculator();
                         sal_cal.calculateSalary(attendancemaster.getEmployeeAttendance());
                         break;
-                        case 8:
-                            System.out.println("\n"+"EMPLOYEE DETAILS :");
-                            display(masterdata);
-                            break;
-                        case 9:
-                            break;
-                        default:
-                            System.out.println("!!ENTER THE CORRECT OPTION!!");
-                            break;
-                    }
-                }catch(Exception ex){
-                    System.out.println("!!INVALID OPTION!! RE-ENTER");
+                    case 8:
+                        System.out.println("\n"+"EMPLOYEE DETAILS :");
+                        display(masterdata);
+                        break;
+                    case 9:
+                        break;
+                    default:
+                        System.out.println("!!ENTER THE CORRECT OPTION!!");
+                        break;
                 }
+            }catch(Exception ex){
+                System.out.println("!!INVALID OPTION!! RE-ENTER");
             }
-            else{
-                break;
-            }
-            count++;
-        }
+        }while(employee_choice!=9);
     }
 }
