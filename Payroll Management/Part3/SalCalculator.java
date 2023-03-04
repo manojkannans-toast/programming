@@ -2,6 +2,10 @@ import java.util.Map;
 import java.util.LinkedHashMap;
 public class SalCalculator{
     public void calculateSalary(LinkedHashMap<Employee,Integer> eligiblelist){
+        if(eligiblelist.size() == 0){
+            System.out.println("!!NO ELIGIBLE EMPLOYEES WERE ADDED!!");
+            return;
+        }
         System.out.format("%15s %13s %17s %22s %18s %14s %13S %13S","ID","NAME","DEPARTMENT","DESIGNATION","SALARY","GROSS","PF","NET"+"\n");
         for(Map.Entry<Employee,Integer> emp : eligiblelist.entrySet())
         {
@@ -20,3 +24,4 @@ public class SalCalculator{
         }
     }       
 }
+

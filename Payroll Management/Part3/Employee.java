@@ -26,13 +26,13 @@ public class Employee{
         return this.empname;
     }
     public void setEmpName(String empname){
-        String regex = "^([A-Z]{1,})([a-zA-Z\\s]){3,20}$";
+        String regex = "^([a-zA-Z\\s]){3,20}$";
         if(empname.matches(regex)){
             this.empname = empname;
             return;
         }
         else{
-            System.out.println("!!ENTER THE VALID EMPLOYEE NAME!!");
+            System.out.println("!!EMPLOYEE NAME SHOULD BE THE LENGTH OF 4 TO 20 CHARACTERS AND SHOULD CONTAIN ONLY ALHABETS!!");
             System.out.println("ENTER THE NAME :");
             Scanner input = new Scanner(System.in);
             empname = input.nextLine();
@@ -73,14 +73,14 @@ public class Employee{
                     this.empdepartment = emp_department;
                     break;
                 default:
-                    System.out.println("!! WRONG ENTRY !!"+"\n"+"\n"+"ENTER THE DEPARTMENT :"+"\n"+"1. HUMAN RESOURCE"+"\n"+"2.IT"+"\n"+"3.FINANCE"+"\n"+"4.MARKETING"+"\n"+"5.R&D"+"\n"+"6.PRODUCTION");
+                    System.out.println("!!ENTER THE CORRECT OPTION!!"+"\n"+"\n"+"ENTER THE DEPARTMENT :"+"\n"+"1. HUMAN RESOURCE"+"\n"+"2.IT"+"\n"+"3.FINANCE"+"\n"+"4.MARKETING"+"\n"+"5.R&D"+"\n"+"6.PRODUCTION");
                     emp_department = input.nextLine();
                     setEmpDepartment(emp_department);
                     input.close();
                     break;
             }
         }catch(Exception ex){
-            System.out.println("!! WRONG ENTRY !!"+"\n"+"\n"+"ENTER THE DEPARTMENT :"+"\n"+"1. HUMAN RESOURCE"+"\n"+"2.IT"+"\n"+"3.FINANCE"+"\n"+"4.MARKETING"+"\n"+"5.R&D"+"\n"+"6.PRODUCTION");
+            System.out.println("!!ALHABETS ARE NOT ALLOWED!!"+"\n"+"\n"+"ENTER THE DEPARTMENT :"+"\n"+"1. HUMAN RESOURCE"+"\n"+"2.IT"+"\n"+"3.FINANCE"+"\n"+"4.MARKETING"+"\n"+"5.R&D"+"\n"+"6.PRODUCTION");
             emp_department = input.nextLine();
             setEmpDepartment(emp_department);
             input.close();
@@ -120,13 +120,13 @@ public class Employee{
                     this.empdesignation = emp_designation;
                     break;
                 default:
-                    System.out.println("!! WRONG ENTRY !!"+"\n"+"\n"+"ENTER THE DESIGNATION"+"\n"+"1. TRAINEE ENGINEER"+"\n"+"2. SOFTWARE ENGINEER"+"\n"+"3. PROJECT LEAD"+"\n"+"4. PROJECT MANAGER"+"\n"+"5. PROGRAM MANAGER"+"\n"+"6. HR MANAGER");
+                    System.out.println("!! ENTER THE CORRECT OPTION !!"+"\n"+"\n"+"ENTER THE DESIGNATION"+"\n"+"1. TRAINEE ENGINEER"+"\n"+"2. SOFTWARE ENGINEER"+"\n"+"3. PROJECT LEAD"+"\n"+"4. PROJECT MANAGER"+"\n"+"5. PROGRAM MANAGER"+"\n"+"6. HR MANAGER");
                     emp_designation = input.nextLine();
                     setEmpDepartment(emp_designation);
                     break;
             }
         }catch(Exception ex){
-            System.out.println("!! WRONG ENTRY !!"+"\n"+"\n"+"ENTER THE DESIGNATION"+"\n"+"1. TRAINEE ENGINEER"+"\n"+"2. SOFTWARE ENGINEER"+"\n"+"3. PROJECT LEAD"+"\n"+"4. PROJECT MANAGER"+"\n"+"5. PROGRAM MANAGER"+"\n"+"6. HR MANAGER");
+            System.out.println("!! ALHABETS ARE NOT ALLOWED !!"+"\n"+"\n"+"ENTER THE DESIGNATION"+"\n"+"1. TRAINEE ENGINEER"+"\n"+"2. SOFTWARE ENGINEER"+"\n"+"3. PROJECT LEAD"+"\n"+"4. PROJECT MANAGER"+"\n"+"5. PROGRAM MANAGER"+"\n"+"6. HR MANAGER");
             emp_designation = input.nextLine();
             setEmpDepartment(emp_designation);
         }
@@ -140,7 +140,7 @@ public class Employee{
         try{
             double emp_salary = Double.parseDouble(Salary);
             if(emp_salary < 5000 || emp_salary > 1000000){
-                System.out.println("!!WRONG ENTRY!! PLEASE ENTER THE VALID SALARY");
+                System.out.println("!!EMPLOYEE SALARY SHOULD BE GREATER THAN 5000 AND LESS THAN 1000000!! PLEASE ENTER THE VALID SALARY");
                 salary = input.nextLine();
                 setEmpSalary(salary);
             }
@@ -148,7 +148,7 @@ public class Employee{
                 this.empsalary = emp_salary;
             }
         }catch(Exception ex){
-            System.out.println("!!WRONG ENTRY!! PLEASE ENTER THE VALID SALARY");
+            System.out.println("!!ALHABETS ARE NOT ALLOWED!! PLEASE ENTER THE VALID SALARY");
             salary = input.nextLine();
             setEmpSalary(salary);
         }
@@ -166,7 +166,7 @@ public class Employee{
         this.empsalary += allow;
     }
     public String toString(){
-        String details = "\n"+"EMPLOYEE ID: "+this.empid+"\n"+"EMPLOYEE NAME :"+this.empname+"\n"+"EMPLOYEE DEPARTMENT: "+this.empdepartment+"\n"+"EMPLOYEE DESIGNATION :"+this.empdesignation+"\n"+"EMPLOYEE SALARY :"+this.empsalary;
+        String details = this.getEmpId()+","+this.getEmpName()+","+this.getEmpDepartment()+","+this.getEmpDesignation()+","+this.getEmpSalary()+"\n";
         return details;
     }
 }
