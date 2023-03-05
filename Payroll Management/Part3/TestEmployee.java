@@ -1,7 +1,6 @@
 import java.util.Scanner;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
-import java.util.Map;
 import java.util.Comparator;
 public class TestEmployee{
     public static class SortByName implements Comparator<Employee>{
@@ -77,22 +76,22 @@ public class TestEmployee{
         }
     }
     public static void display(MasterData masterdata){
-        System.out.format("%15s %18s %19s %23s %18s","ID","NAME","DEPARTMENT","DESIGNATION","SALARY"+"\n"+"----------------------------------------------------------------------");
+        System.out.format("%15s %18s %19s %23s %25s","ID","NAME","DEPARTMENT","DESIGNATION","SALARY"+"\n"+"--------------------------------------------------------------------------------------"+"\n");
         for(Employee emp : masterdata.getEmployeeList()){
                 String details = emp.toString();
                 String mod_det[] = details.split(",");
                 System.out.format("%15s %18s %19s %23s %18s",mod_det[0],mod_det[1],mod_det[2],mod_det[3],mod_det[4]+"\n");
         }
     }
-    public static void setAttendanceForEmployees(MasterData masterdata,AttendanceMaster attendancemaster){
+    public static void setAttendanceForEmployees(MasterData masterdata,AttendanceMaster attendancemaster,int att_flag){
         System.out.println("SET ATTENDANCE FOR ADDED EMPLOYEES"+"\n");
         int i=0;
         do{
             do{
                 try{
-                    if(i == masterdata.getEmployeeList().size()){
-                        System.out.println("!!THERE ARE NO EMPLOYEES TO ADD THE ATTENDANCE!!");
-                        break;
+                    if(att_flag == 1){
+                        System.out.println("!!ATTENDANCE WERE ADDED TO THE EMPLOYEES!!");
+                        return;
                     }
                     if(!attendancemaster.getEmployeeAttendance().containsKey(masterdata.getEmployeeList().get(i))){
                         System.out.println("ENTER THE ATTENDANCE FOR AN EMPLOYEE ID "+masterdata.getEmployeeList().get(i).getEmpId());
@@ -112,20 +111,20 @@ public class TestEmployee{
                         continue;
                     }
                 }catch(Exception ex){
-                    System.out.println("!!WRONG ENTRY!!");
+                     System.out.println("!!WRONG ENTRY!!");
                 }
             }while(true);
             i++;
         }while(i<masterdata.getEmployeeList().size());
     }
-    public static int validateEmployeeId(String employeeid,AttendanceMaster attendancemaster){
+    public static int validateEmployeeId(String employeeid,MasterData masterdata){
         Scanner input = new Scanner(System.in);
         do{
             try{
                 int flag = 0;
                 int emp_id = Integer.parseInt(employeeid);
-                for(Map.Entry<Employee,Integer> emp : attendancemaster.getEmployeeAttendance().entrySet()){
-                    if(emp.getKey().getEmpId() == emp_id){
+                for(Employee emp : masterdata.getEmployeeList()){
+                    if(emp.getEmpId() == emp_id){
                         flag = 1;   
                     }
                 }
@@ -180,7 +179,7 @@ public class TestEmployee{
         AttendanceMaster attendancemaster = new AttendanceMaster();
         MasterData masterdata = new MasterData(employees);
         String employeechoice;
-        int employee_choice = -1;
+        int employee_choice = -1,fil_flag = 0,att_flag = 0;
         do{
             employeechoice = "";
             employee_choice = -1;
@@ -192,8 +191,7 @@ public class TestEmployee{
                 switch(employee_choice){
                     case 1:
                         Employee employee = new Employee();
-                        System.out.print("ENTER THE EMPLOYEE DETAILS"+"\n"+"ENTER THE NAME :");
-                        //input.nextLine();
+                        System.out.print("ENTER THE EMPLOYEE DETAILS"+"\n"+"ENTER THE NAME :"); 
                         String empname = input.nextLine();
                         employee.setEmpName(empname);
                         System.out.println("ENTER THE EMPLOYEE DEPARTMENT :"+"\n"+"1. HUMAN RESOURCE"+"\n"+"2. IT"+"\n"+"3. FINANCE"+"\n"+"4. MARKETING"+"\n"+"5. R&D"+"\n"+"6. PRODUCTION");
@@ -205,42 +203,41 @@ public class TestEmployee{
                         System.out.println("ENTER THE EMPLOYEE SALARY :");
                         String empsalary = input.nextLine();
                         employee.setEmpSalary(empsalary);
-                        employees.add(employee);
+                        masterdata.getEmployeeList().add(employee);
+                        att_flag = 0;
+                        fil_flag = 0;
                         break;
                     case 2:
-                        masterdata.setEmployeeList(employees);
                         if(employees.size()==0){
                             System.out.println("!!THERE ARE NO EMPLOYEES FOUND!!");
                         }
                         else{
-                            setAttendanceForEmployees(masterdata,attendancemaster);
+                            setAttendanceForEmployees(masterdata,attendancemaster,att_flag);
                         }
+                        att_flag = 1;
                         break;
                     case 3:
-                        masterdata.setEmployeeList(employees);
                         System.out.println("ENTER THE EMPLOYEE ID :");
                         String empid = input.nextLine();
-                        int emp_id = validateEmployeeId(empid,attendancemaster);
+                        int emp_id = validateEmployeeId(empid,masterdata);
                         System.out.println("ENTER THE EMPLOYEE ATTENDANCE :");
                         String empattendance = input.nextLine();
                         int emp_attendance = validateEmployeeAttendance(empattendance);
-                        if(attendancemaster.getEmployeeAttendance().size()!=0){
-                            int result = attendancemaster.updateAttendance(emp_id,emp_attendance,masterdata);
-                            if(result == 1){
-                                System.out.println("ATTENDANCE UPDATED SUCCESFULLY");
-                            }
-                            else{
-                                System.out.println("!!NO SUCH EMPLOYEE FOUND!!");
-                            }
-                        }else{
-                            System.out.println("!!NO EMPLOYEES WERE FOUND!!");
+                        int result = attendancemaster.updateAttendance(emp_id,emp_attendance,masterdata);
+                        if(result == 1){
+                            System.out.println("ATTENDANCE UPDATED SUCCESFULLY");
                         }
+                        else{
+                            System.out.println("!!NO SUCH EMPLOYEE FOUND!!");
+                        }
+                        fil_flag = 0;
                         break;
                     case 4:
-                        masterdata.setEmployeeList(employees);
-                        LinkedHashMap<Employee,Integer> temp_emp_attendance = attendancemaster.getEmployeeAttendance();
+                        LinkedHashMap<Employee,Integer> temp_emp_attendance = new LinkedHashMap<Employee,Integer>();
+                        temp_emp_attendance = attendancemaster.getEmployeeAttendance();
                         attendancemaster.filterEmployeeList(temp_emp_attendance);
                         attendancemaster.showEligibleList();
+                        fil_flag = 1;
                         break;
                     case 5:
                         do{
@@ -315,12 +312,11 @@ public class TestEmployee{
                         }while(true);
                         break;
                     case 6:
-                        System.out.println("ELIGIBLE EMPLOYEES ARE :");
                         attendancemaster.showEligibleList();
                         break;
                     case 7:
                         SalCalculator sal_cal = new SalCalculator();
-                        sal_cal.calculateSalary(attendancemaster.getEmployeeAttendance());
+                        sal_cal.calculateSalary(attendancemaster.getEmployeeAttendance(),fil_flag);
                         break;
                     case 8:
                         System.out.println("\n"+"EMPLOYEE DETAILS :");

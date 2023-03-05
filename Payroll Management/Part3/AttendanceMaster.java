@@ -1,7 +1,5 @@
 import java.util.LinkedHashMap;
-import java.util.Map;
-import java.util.ArrayList;
-import java.util.Scanner;
+import java.util.Map; 
 public class AttendanceMaster{
     private LinkedHashMap<Employee,Integer> empattendance;
     public AttendanceMaster(){
@@ -32,10 +30,10 @@ public class AttendanceMaster{
     }
     public void showEligibleList(){
         if(this.empattendance.size() == 0){
-            System.out.println("!!ATTENDANCE ARE NOT ADDED TO THE EMPLOYEES!!");
+            System.out.println("!!NO ELIGIBLE EMPLOYEES ARE THERE!!");
         }
         else{
-            System.out.format("%15s %18s %19s %23s %18s","ID","NAME","DEPARTMENT","DESIGNATION","SALARY"+"\n");
+            System.out.format("%15s %18s %19s %23s %18s","ID","NAME","DEPARTMENT","DESIGNATION","SALARY"+"\n"+"--------------------------------------------------------------------------------------------"+"\n");
             for(Map.Entry<Employee,Integer> attendance:this.empattendance.entrySet()){
                 Integer num_of_days = attendance.getValue();
                 if(num_of_days > 10){
