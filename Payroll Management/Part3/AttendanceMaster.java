@@ -1,5 +1,6 @@
 import java.util.LinkedHashMap;
 import java.util.Map; 
+import java.util.ArrayList;
 public class AttendanceMaster{
     private LinkedHashMap<Employee,Integer> empattendance;
     public AttendanceMaster(){
@@ -17,13 +18,15 @@ public class AttendanceMaster{
         }
         return 0;
     }
-    public void filterEmployeeList(LinkedHashMap<Employee,Integer> temp_emp_attendance){
+    public ArrayList<Employee> filterEmployeeList(LinkedHashMap<Employee,Integer> temp_emp_attendance,ArrayList<Employee> delete_emp){
         for(Map.Entry<Employee,Integer> attendance:temp_emp_attendance.entrySet()){
             Integer num_of_days = attendance.getValue();
             if(num_of_days <= 10){
                 this.empattendance.remove(attendance.getKey());
+                delete_emp.add(attendance.getKey());
             }
         }
+        return delete_emp;
     }
     public void setEmployeeAttendance(LinkedHashMap<Employee,Integer> emp_attendance){
         this.empattendance = emp_attendance;

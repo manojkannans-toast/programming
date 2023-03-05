@@ -83,8 +83,7 @@ public class TestEmployee{
                 System.out.format("%15s %18s %19s %23s %18s",mod_det[0],mod_det[1],mod_det[2],mod_det[3],mod_det[4]+"\n");
         }
     }
-    public static void setAttendanceForEmployees(MasterData masterdata,AttendanceMaster attendancemaster,int att_flag){
-        System.out.println("SET ATTENDANCE FOR ADDED EMPLOYEES"+"\n");
+    public static void setAttendanceForEmployees(MasterData masterdata,AttendanceMaster attendancemaster,ArrayList<Employee> delete_emp,int att_flag){
         int i=0;
         do{
             do{
@@ -93,7 +92,7 @@ public class TestEmployee{
                         System.out.println("!!ATTENDANCE WERE ADDED TO THE EMPLOYEES!!");
                         return;
                     }
-                    if(!attendancemaster.getEmployeeAttendance().containsKey(masterdata.getEmployeeList().get(i))){
+                    if((!(delete_emp.contains(masterdata.getEmployeeList().get(i)))) && (!(attendancemaster.getEmployeeAttendance().containsKey(masterdata.getEmployeeList().get(i))))){
                         System.out.println("ENTER THE ATTENDANCE FOR AN EMPLOYEE ID "+masterdata.getEmployeeList().get(i).getEmpId());
                         Scanner input = new Scanner(System.in);
                         String days = input.nextLine();
@@ -179,6 +178,7 @@ public class TestEmployee{
         AttendanceMaster attendancemaster = new AttendanceMaster();
         MasterData masterdata = new MasterData(employees);
         String employeechoice;
+        ArrayList<Employee> delete_emp = new ArrayList<Employee>();
         int employee_choice = -1,fil_flag = 0,att_flag = 0;
         do{
             employeechoice = "";
@@ -212,7 +212,7 @@ public class TestEmployee{
                             System.out.println("!!THERE ARE NO EMPLOYEES FOUND!!");
                         }
                         else{
-                            setAttendanceForEmployees(masterdata,attendancemaster,att_flag);
+                            setAttendanceForEmployees(masterdata,attendancemaster,delete_emp,att_flag);
                         }
                         att_flag = 1;
                         break;
@@ -233,9 +233,8 @@ public class TestEmployee{
                         fil_flag = 0;
                         break;
                     case 4:
-                        LinkedHashMap<Employee,Integer> temp_emp_attendance = new LinkedHashMap<Employee,Integer>();
-                        temp_emp_attendance = attendancemaster.getEmployeeAttendance();
-                        attendancemaster.filterEmployeeList(temp_emp_attendance);
+                        LinkedHashMap<Employee,Integer> temp_emp_attendance = (LinkedHashMap<Employee,Integer>)attendancemaster.getEmployeeAttendance().clone();
+                        delete_emp = attendancemaster.filterEmployeeList(temp_emp_attendance,delete_emp);
                         attendancemaster.showEligibleList();
                         fil_flag = 1;
                         break;
@@ -329,7 +328,8 @@ public class TestEmployee{
                         break;
                 }
             }catch(Exception ex){
-                System.out.println("!!INVALID OPTION!! RE-ENTER");
+                ex.printStackTrace();
+                System.out.println("!!njnjnINVALID OPTION!! RE-ENTER");
             }
         }while(employee_choice!=9);
     }
