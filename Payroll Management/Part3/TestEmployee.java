@@ -89,7 +89,7 @@ public class TestEmployee{
             do{
                 try{
                     if(att_flag == 1){
-                        System.out.println("!!ATTENDANCE WERE ADDED TO THE EMPLOYEES!!");
+                        System.out.println("!!ATTENDANCE WERE ALREADY ADDED TO THE EMPLOYEES!!");
                         return;
                     }
                     if((!(delete_emp.contains(masterdata.getEmployeeList().get(i)))) && (!(attendancemaster.getEmployeeAttendance().containsKey(masterdata.getEmployeeList().get(i))))){
@@ -233,6 +233,7 @@ public class TestEmployee{
                         fil_flag = 0;
                         break;
                     case 4:
+                        @SuppressWarnings("unchecked")
                         LinkedHashMap<Employee,Integer> temp_emp_attendance = (LinkedHashMap<Employee,Integer>)attendancemaster.getEmployeeAttendance().clone();
                         delete_emp = attendancemaster.filterEmployeeList(temp_emp_attendance,delete_emp);
                         attendancemaster.showEligibleList();
@@ -328,8 +329,7 @@ public class TestEmployee{
                         break;
                 }
             }catch(Exception ex){
-                ex.printStackTrace();
-                System.out.println("!!njnjnINVALID OPTION!! RE-ENTER");
+                System.out.println("!!INVALID OPTION WHITE SPACE AND ALHABETS ARE NOT ALLOWED!! RE-ENTER");
             }
         }while(employee_choice!=9);
     }

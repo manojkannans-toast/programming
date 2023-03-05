@@ -32,7 +32,7 @@ public class Employee{
             return;
         }
         else{
-            System.out.println("!!EMPLOYEE NAME SHOULD BE THE LENGTH OF 4 TO 20 CHARACTERS AND SHOULD CONTAIN ONLY ALHABETS!!");
+            System.out.println("!!EMPLOYEE NAME SHOULD BE THE LENGTH OF 3 TO 20 CHARACTERS AND SHOULD CONTAIN ONLY ALHABETS!!");
             System.out.println("ENTER THE NAME :");
             Scanner input = new Scanner(System.in);
             empname = input.nextLine();
