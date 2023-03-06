@@ -16,10 +16,9 @@ public class SalCalculator{
             System.out.println("!!NO ELIGIBLE EMPLOYEES ARE THERE!!");
             return;
         }
-        System.out.format("%15s %13s %17s %22s %18s %14s %13s %13s %20s","ID","NAME","DEPARTMENT","DESIGNATION","SALARY","GROSS","PF","NET","NUMBER_OF_DAYS"+"\n");
+        System.out.format("%15s %13s %17s %22s %18s %14s %13s %13s %20s \n\t----------------------------------------------------------------------------------------------------------------------------------------------------\n","ID","NAME","DEPARTMENT","DESIGNATION","SALARY","GROSS","PF","NET","NUMBER_OF_DAYS"+"\n");
         for(Map.Entry<Employee,Integer> emp : eligiblelist.entrySet())
         {
-            System.out.println("-----------------------------------------------------------------------------------------------------------------------------------------------------------");
             double allowance = 0.0;
             if(emp.getKey().getEmpDesignation().contains("MANAGER")){
                 allowance = (20 * emp.getKey().getEmpSalary())/100;

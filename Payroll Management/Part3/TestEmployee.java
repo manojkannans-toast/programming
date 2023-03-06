@@ -80,48 +80,11 @@ public class TestEmployee{
             System.out.println("!!NO EMPLOYEES ARE ADDED!!");
             return;
         }
-        System.out.format("%15s %18s %19s %23s %18s","ID","NAME","DEPARTMENT","DESIGNATION","SALARY"+"\n"+"--------------------------------------------------------------------------------------"+"\n");
+        System.out.format("%15s %18s %19s %23s %17s \n\t--------------------------------------------------------------------------------------\n","ID","NAME","DEPARTMENT","DESIGNATION","SALARY"+"\n");
         for(Employee emp : masterdata.getEmployeeList()){
                 String details = emp.toString();
                 String emp_det[] = details.split(",");
-                System.out.format("%15s %18s %19s %23s %18s",emp_det[0],emp_det[1],emp_det[2],emp_det[3],emp_det[4]+"\n"+"----------------------------------------------------------------------------------------------------------");
-        }
-    }
-    public static void setAttendanceForEmployees(MasterData masterdata,AttendanceMaster attendancemaster,ArrayList<Employee> delete_emp,int att_flag){
-        int i=0,flag = 0;
-        Scanner input = new Scanner(System.in);
-        do{
-            do{
-                try{
-                    if(att_flag == 1){
-                        System.out.println("!!ATTENDANCE WERE ALREADY ADDED TO THE EMPLOYEES!!");
-                        return;
-                    }
-                    if((!(delete_emp.contains(masterdata.getEmployeeList().get(i)))) && (!(attendancemaster.getEmployeeAttendance().containsKey(masterdata.getEmployeeList().get(i))))){
-                        System.out.println("ENTER THE ATTENDANCE FOR AN EMPLOYEE ID "+masterdata.getEmployeeList().get(i).getEmpId());
-                        flag = 1;
-                        String days = input.nextLine();
-                        int attendancedays = Integer.parseInt(days);
-                        if(attendancedays >= 0){
-                            attendancemaster.getEmployeeAttendance().put(masterdata.getEmployeeList().get(i),attendancedays);
-                            break;
-                        }
-                        else{
-                            System.out.println("!!ATTENDANCE DAYS MUST BE EITHER 0 OR GREATER THAN 0!!");
-                        }
-                    }
-                    else{
-                        break;
-                    }
-                }catch(Exception ex){
-                    ex.printStackTrace();
-                    System.out.println("!!ATTENDANCE DAYS MUST BE GIVEN IN NUMERICAL FORMAT!!");
-                }
-            }while(true);
-            i++;
-        }while(i<masterdata.getEmployeeList().size());
-        if(flag != 1){
-            System.out.println("YOU HAVE ADDED ATTENDANCE TO ALL EMPLOYEES");
+                System.out.format("%15s %18s %19s %23s %18s",emp_det[0],emp_det[1],emp_det[2],emp_det[3],emp_det[4]+"\n");
         }
     }
     public static int validateEmployeeId(String employeeid,MasterData masterdata){
@@ -190,7 +153,7 @@ public class TestEmployee{
         do{
             String employeechoice;
             employee_choice = -1;
-            System.out.println("\n"+"-----------------------------------------------------"+"\n"+"1. ADD EMPLOYEE DETAILS"+"\n"+"2. SET EMPLOYEES ATTENDANCE"+"\n"+"3. UPDATE EMPLOYEE ATTENDANCE"+"\n"+"4. FILTER EMPLOYEES"+"\n"+"5. SORT EMPLOYEE DETAIL"+"\n"+"6. SHOW ELIGIBLE EMPLOYEES"+"\n"+"7. CALCULATE SALARY FOR EMPLOYEES"+"\n"+"8. DISPLAY EMPLOYEE DETAILS"+"\n"+"9.TO EXIT"+"\n"+"ENTER THE CHOICE :");
+            System.out.println("\n"+"\n"+"1. ADD EMPLOYEE DETAILS"+"\n"+"2. SET EMPLOYEES ATTENDANCE"+"\n"+"3. UPDATE EMPLOYEE ATTENDANCE"+"\n"+"4. FILTER EMPLOYEES"+"\n"+"5. SORT EMPLOYEE DETAIL"+"\n"+"6. SHOW ELIGIBLE EMPLOYEES"+"\n"+"7. CALCULATE SALARY FOR EMPLOYEES"+"\n"+"8. DISPLAY EMPLOYEE DETAILS"+"\n"+"9.TO EXIT"+"\n"+"ENTER THE CHOICE :");
             try{
                 Scanner input = new Scanner(System.in);
                 employeechoice = input.nextLine();
@@ -219,7 +182,7 @@ public class TestEmployee{
                             System.out.println("!!NO EMPLOYEES FOUND!!");
                         }
                         else{
-                            setAttendanceForEmployees(masterdata,attendancemaster,delete_emp,att_flag);
+                            attendancemaster.setAttendanceForEmployees(masterdata,delete_emp,att_flag);
                         }
                         att_flag = 1;
                         break;
