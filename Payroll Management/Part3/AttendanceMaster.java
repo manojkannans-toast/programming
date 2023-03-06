@@ -10,6 +10,9 @@ public class AttendanceMaster{
         return this.empattendance;
     }
     public int updateAttendance(int employeeid,int employeeattendance,MasterData masterdata){
+        if(masterdata.getEmployeeList().size()==0){
+            return -1;
+        }
         for(Employee emp: masterdata.getEmployeeList()){
             if(emp.getEmpId() == employeeid){
                 this.empattendance.put(emp,employeeattendance);
@@ -18,7 +21,13 @@ public class AttendanceMaster{
         }
         return 0;
     }
-    public ArrayList<Employee> filterEmployeeList(LinkedHashMap<Employee,Integer> temp_emp_attendance,ArrayList<Employee> delete_emp){
+    public ArrayList<Employee> filterEmployeeList(MasterData masterdata,LinkedHashMap<Employee,Integer> temp_emp_attendance,ArrayList<Employee> delete_emp){
+        for(Employee emp :  masterdata.getEmployeeList()){
+            if(!(temp_emp_attendance.containsKey(emp)) && !(delete_emp.contains(emp))){
+                System.out.println("YOU HAVE NOT ADDED ATTENDANCE TO ALL THE EMPLOYEES");
+                return delete_emp;
+            }
+        }
         for(Map.Entry<Employee,Integer> attendance:temp_emp_attendance.entrySet()){
             Integer num_of_days = attendance.getValue();
             if(num_of_days <= 10){
@@ -26,14 +35,20 @@ public class AttendanceMaster{
                 delete_emp.add(attendance.getKey());
             }
         }
+        this.showEligibleList(masterdata);
         return delete_emp;
     }
     public void setEmployeeAttendance(LinkedHashMap<Employee,Integer> emp_attendance){
         this.empattendance = emp_attendance;
     }
-    public void showEligibleList(){
+    public void showEligibleList(MasterData masterdata){
+        if(masterdata.getEmployeeList().size() == 0){
+            System.out.println("!!NO EMPLOYEES FOUND!!");
+            return;
+        }
         if(this.empattendance.size() == 0){
             System.out.println("!!NO ELIGIBLE EMPLOYEES ARE THERE!!");
+            return;
         }
         else{
             System.out.format("%15s %18s %19s %23s %18s","ID","NAME","DEPARTMENT","DESIGNATION","SALARY"+"\n"+"--------------------------------------------------------------------------------------------"+"\n");
