@@ -1,10 +1,7 @@
 import java.util.Map;
 import java.util.LinkedHashMap;
-// import java.util.List;
-// import java.util.stream.Collectors;
 public class SalCalculator{
     public void calculateSalary(LinkedHashMap<Employee,Integer> eligiblelist,MasterData masterdata,int fil_flag){
-        //List<Integer> range = eligiblelist.values().stream().filter(value->value<=10).collect(Collectors.toList());
         if(fil_flag == 0){
             System.out.println("!!YOU HAVE NOT FILTERED THE EMPLOYEES YET!!");
             return;
@@ -16,7 +13,7 @@ public class SalCalculator{
             System.out.println("!!NO ELIGIBLE EMPLOYEES ARE THERE!!");
             return;
         }
-        System.out.format("%15s %13s %17s %22s %18s %14s %13s %13s %20s \n\t----------------------------------------------------------------------------------------------------------------------------------------------------\n","ID","NAME","DEPARTMENT","DESIGNATION","SALARY","GROSS","PF","NET","NUMBER_OF_DAYS"+"\n");
+        System.out.format("%15s %13s %17s %22s %18s %14s %13s %13s %20s \n\t--------------------------------------------------------------------------------------------------------------------------------------------------\n","ID","NAME","DEPARTMENT","DESIGNATION","SALARY","GROSS","PF","NET","NUMBER_OF_DAYS"+"\n");
         for(Map.Entry<Employee,Integer> emp : eligiblelist.entrySet())
         {
             double allowance = 0.0;

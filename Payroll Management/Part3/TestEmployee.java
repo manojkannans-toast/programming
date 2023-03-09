@@ -3,6 +3,10 @@ import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.Comparator;
 public class TestEmployee{
+    public static ArrayList<Employee> employees = new ArrayList<Employee>();
+    public static AttendanceMaster attendancemaster = new AttendanceMaster();
+    public static MasterData masterdata = new MasterData(employees);
+    public static ArrayList<Employee> delete_emp = new ArrayList<Employee>();
     public static class SortByName implements Comparator<Employee>{
         public boolean isascending;
         public SortByName(boolean isascending){
@@ -102,11 +106,11 @@ public class TestEmployee{
                     return emp_id;
                 }
                 else{
-                    System.out.println("!!NO SUCH EMPLOYEE FOUND!!"+"\n"+"ENTER THE EMPLOYEE ID :");
+                    System.out.println("!!NO DETAILS FOUND WITH THE GIVEN EMPLOYEE ID!!"+"\n"+"ENTER THE EMPLOYEE ID :");
                     employeeid = input.nextLine();
                 }
             }catch(Exception ex){
-                System.out.println("!!WRONG ENTRY!!"+"\n"+"ENTER THE EMPLOYEE ID :");
+                System.out.println("!!ONLY NUMERICAL DATA ARE ALLOWED!!"+"\n"+"ENTER THE EMPLOYEE ID :");
                 employeeid = input.nextLine();
             }
         }while(true);
@@ -117,45 +121,40 @@ public class TestEmployee{
             try{
                 int att_days = Integer.parseInt(days);
                 if(att_days < 0){
-                    System.out.println("!!WRONG ENTRY!!"+"\n"+"ENTER THE EMPLOYEE ATTENDANCE :");
+                    System.out.println("!!ATTENDANCE DAYS MUST BE GREATER THAN OR EQUAL TO 0!!"+"\n"+"ENTER THE EMPLOYEE ATTENDANCE :");
                     days = input.nextLine();
                 }
                 return att_days;
             }catch(Exception ex){
-                System.out.println("!!WRONG ENTRY!!"+"\n"+"ENTER THE EMPLOYEE ATTENDANCE :");
+                System.out.println("!!ONLY NUMERICAL DATA ARE ALLOWED!!"+"\n"+"ENTER THE EMPLOYEE ATTENDANCE :");
                 days = input.nextLine();
             }
         }while(true);
-    }
+    
     public static int validateSortChoice(String asc_desc_choice){
         Scanner input = new Scanner(System.in);
         int asc_desc = 0;
         try{
             asc_desc = Integer.parseInt(asc_desc_choice);
             if(asc_desc > 2 || asc_desc < 1){
-                System.out.println("!!ENTER THE VALID OPTION!!");
+                System.out.println("!!SORTING CHOICE SHOULD BE EITHER 1 OR 2!!");
                 asc_desc_choice = input.nextLine();
                 asc_desc = validateSortChoice(asc_desc_choice);
             }
         }catch(Exception ex){
-            System.out.println("!!ENTER THE VALID OPTION!!hihi");
+            System.out.println("!!ONLY NUMERICAL DATA ARE ALLOWED!!"+"\n"+"ENTER THE CHOICE:");
             asc_desc_choice = input.nextLine();
             asc_desc = validateSortChoice(asc_desc_choice);
         }
         return asc_desc;
     }
     public static void main(String args[]){
-        ArrayList<Employee> employees = new ArrayList<Employee>();
-        AttendanceMaster attendancemaster = new AttendanceMaster();
-        MasterData masterdata = new MasterData(employees);
-        ArrayList<Employee> delete_emp = new ArrayList<Employee>();
-        int employee_choice = -1,fil_flag = 0,att_flag = 0;
+        int employee_choice,fil_flag = 0,att_flag = 0;
+        Scanner input = new Scanner(System.in);
+        String employeechoice;
         do{
-            String employeechoice;
-            employee_choice = -1;
             System.out.println("\n"+"\n"+"1. ADD EMPLOYEE DETAILS"+"\n"+"2. SET EMPLOYEES ATTENDANCE"+"\n"+"3. UPDATE EMPLOYEE ATTENDANCE"+"\n"+"4. FILTER EMPLOYEES"+"\n"+"5. SORT EMPLOYEE DETAIL"+"\n"+"6. SHOW ELIGIBLE EMPLOYEES"+"\n"+"7. CALCULATE SALARY FOR EMPLOYEES"+"\n"+"8. DISPLAY EMPLOYEE DETAILS"+"\n"+"9.TO EXIT"+"\n"+"ENTER THE CHOICE :");
             try{
-                Scanner input = new Scanner(System.in);
                 employeechoice = input.nextLine();
                 employee_choice = Integer.parseInt(employeechoice);
                 switch(employee_choice){
@@ -312,8 +311,7 @@ public class TestEmployee{
                         break;
                 }
             }catch(Exception ex){
-                ex.printStackTrace();
-                System.out.println("!!INVALID OPTION ONLY NUMERICAL DATA ARE ALLOWED!! RE-ENTER");
+                System.out.println("!!INVALID OPTION, ONLY NUMERICAL DATA ARE ALLOWED!! RE-ENTER");
             }
         }while(employee_choice!=9);
     }
