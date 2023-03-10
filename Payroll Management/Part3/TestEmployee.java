@@ -1,6 +1,5 @@
 import java.util.Scanner;
 import java.util.ArrayList;
-import java.util.LinkedHashMap;
 import java.util.Comparator;
 public class TestEmployee{
     public static ArrayList<Employee> employees = new ArrayList<Employee>();
@@ -130,7 +129,7 @@ public class TestEmployee{
                 days = input.nextLine();
             }
         }while(true);
-    
+    }
     public static int validateSortChoice(String asc_desc_choice){
         Scanner input = new Scanner(System.in);
         int asc_desc = 0;
@@ -149,7 +148,7 @@ public class TestEmployee{
         return asc_desc;
     }
     public static void main(String args[]){
-        int employee_choice,fil_flag = 0,att_flag = 0;
+        int employee_choice = -1,fil_flag = 0,att_flag = 0;
         Scanner input = new Scanner(System.in);
         String employeechoice;
         do{
@@ -209,9 +208,19 @@ public class TestEmployee{
                         fil_flag = 0;
                         break;
                     case 4:
-                        @SuppressWarnings("unchecked")
-                        LinkedHashMap<Employee,Integer> temp_emp_attendance = (LinkedHashMap<Employee,Integer>)attendancemaster.getEmployeeAttendance().clone();
-                        delete_emp = attendancemaster.filterEmployeeList(masterdata,temp_emp_attendance,delete_emp);
+                        //@SuppressWarnings("unchecked")
+                        //LinkedHashMap<Employee,Integer> temp_emp_attendance = (LinkedHashMap<Employee,Integer>)attendancemaster.getEmployeeAttendance().clone();
+                        int att_add = 0;
+                        for(Employee emp :  masterdata.getEmployeeList()){
+                            if(!(attendancemaster.getEmployeeAttendance().containsKey(emp)) && !(delete_emp.contains(emp))){
+                                System.out.println("YOU HAVE NOT ADDED ATTENDANCE TO ALL THE EMPLOYEES");
+                                att_add = 1;
+                                break;
+                            }
+                        }
+                        if(att_add == 0){
+                            delete_emp = attendancemaster.filterEmployeeList(delete_emp);
+                        }
                         fil_flag = 1;
                         break;
                     case 5:
@@ -298,8 +307,10 @@ public class TestEmployee{
                             System.out.println("!!NO EMPLOYEES ARE ADDED!!");
                             break;
                         }
-                        SalCalculator sal_cal = new SalCalculator();
-                        sal_cal.calculateSalary(attendancemaster.getEmployeeAttendance(),masterdata,fil_flag);
+                        else{
+                            SalCalculator sal_cal = new SalCalculator();
+                            sal_cal.calculateSalary(attendancemaster.getEmployeeAttendance(),fil_flag);
+                        }
                         break;
                     case 8:
                         display(masterdata);

@@ -1,13 +1,10 @@
 import java.util.Map;
 import java.util.LinkedHashMap;
 public class SalCalculator{
-    public void calculateSalary(LinkedHashMap<Employee,Integer> eligiblelist,MasterData masterdata,int fil_flag){
+    public void calculateSalary(LinkedHashMap<Employee,Integer> eligiblelist,int fil_flag){
         if(fil_flag == 0){
             System.out.println("!!YOU HAVE NOT FILTERED THE EMPLOYEES YET!!");
             return;
-        }
-        if(masterdata.getEmployeeList().size()==0){
-            System.out.println("!!NO EMPLOYEES ARE ADDED!!");
         }
         if(eligiblelist.size() == 0){
             System.out.println("!!NO ELIGIBLE EMPLOYEES ARE THERE!!");
@@ -26,7 +23,7 @@ public class SalCalculator{
             double gross = emp.getKey().getEmpSalary() + allowance;
             double pf = (10 * gross)/100;
             double net_salary = gross - pf;
-            System.out.format("%15s %13s %17s %22s %18s %14s %13s %13s %20s",emp.getKey().getEmpId(),emp.getKey().getEmpName(),emp.getKey().getEmpDepartment(),emp.getKey().getEmpDesignation(),emp.getKey().getEmpSalary(),gross,pf,net_salary,emp.getValue()+"\n");
+            System.out.format("%15s %13s %17s %22s %18s %14s %13s %13s %20s",emp.getKey().getEmpId(),emp.getKey().getEmpName(),emp.getKey().getEmpDepartment(),emp.getKey().getEmpDesignation(),emp.getKey().getEmpSalary(),gross,pf,net_salary,emp.getValue()+"\n\n");
         }
     }       
 }

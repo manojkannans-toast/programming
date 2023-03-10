@@ -58,13 +58,8 @@ public class AttendanceMaster{
         }
         return 0;
     }
-    public ArrayList<Employee> filterEmployeeList(MasterData masterdata,LinkedHashMap<Employee,Integer> temp_emp_attendance,ArrayList<Employee> delete_emp){
-        for(Employee emp :  masterdata.getEmployeeList()){
-            if(!(temp_emp_attendance.containsKey(emp)) && !(delete_emp.contains(emp))){
-                System.out.println("YOU HAVE NOT ADDED ATTENDANCE TO ALL THE EMPLOYEES");
-                return delete_emp;
-            }
-        }
+    public ArrayList<Employee> filterEmployeeList(ArrayList<Employee> delete_emp){
+        LinkedHashMap<Employee,Integer> temp_emp_attendance = this.empattendance;
         for(Map.Entry<Employee,Integer> attendance:temp_emp_attendance.entrySet()){
             Integer num_of_days = attendance.getValue();
             if(num_of_days <= 10){
@@ -72,7 +67,6 @@ public class AttendanceMaster{
                 delete_emp.add(attendance.getKey());
             }
         }
-        this.showEligibleList(masterdata);
         return delete_emp;
     }
     public void setEmployeeAttendance(LinkedHashMap<Employee,Integer> emp_attendance){
