@@ -222,6 +222,7 @@ public class TestEmployee{
                             delete_emp = attendancemaster.filterEmployeeList(delete_emp);
                         }
                         fil_flag = 1;
+                        attendancemaster.showEligibleList(masterdata);
                         break;
                     case 5:
                         do{
